@@ -1,0 +1,260 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<!-- user modal popup with update user -->
+
+<div class="modal bl fade" id="add_user" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header pb-0 border-0">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body pt-0">
+        <h3>Update User Details</h3>
+        <form method='POST' action='/update_user/'>
+          {% csrf_token %}
+          <div class="row mt-4">
+            <input type="hidden" class="form-control" id="update_id" name="id">
+            <div class="col-lg-6 col-md-6">
+              <div class="form-group">
+                <label for="First Name">First Name</label>
+                <input type="text" class="form-control" id="First" name="first_name" placeholder="First Name">
+              </div>
+            </div>
+            <div class="col-lg-6 col-md-6">
+              <div class="form-group">
+                <label for="Last Name">Last Name</label>
+                <input type="text" class="form-control" id="Last" name="last_name" placeholder="Last Name">
+              </div>
+            </div>
+
+            <div class="col-lg-6 col-md-6">
+              <div class="form-group">
+                <label for="Email">Email</label>
+                <input type="email" class="form-control" id="Email" name="email" placeholder="Email">
+              </div>
+            </div>
+            <div class="col-lg-6 col-md-6">
+              <div class="form-group">
+                <label for="Phone Number">Phone Number</label>
+                <input type="number" class="form-control" id="Phone" name="phone" placeholder="Phone Number">
+              </div>
+            </div>
+            <div class="col-lg-6 col-md-6">
+              <div class="form-group">
+                <label for="Password">Password</label>
+                <input type="password" minlength="8" class="form-control" name="password" id="" placeholder="Password">
+              </div>
+            </div>
+            <div class="col-lg-6 col-md-6">
+              <div class="form-group">
+                <label for="Password">Confirm Password</label>
+                <input type="password" minlength="8" class="form-control" name="confirm_password" id="" placeholder="Confirm Password">
+              </div>
+            </div>
+            <div class="col-lg-6 col-md-6">
+              <div class="form-group">
+                <label for="Status">Status</label><br>
+                <select class="form-control" name="status" >
+                  <option value="" selected disabled hidden>Status</option>
+                  <option value="admin">Admin</option>
+                  <option value="staff">Staff</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="up-btn">
+            <button type="submit" class="up-btn border-0 mt-4">Update</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- end pop up -->
+
+<div id="User">
+  <div class="row align-items-center">
+    <div class="col-lg-7">
+      <h4>Users</h4>
+    </div>
+  </div>
+  {% if not no_data %}
+  <div class="filter">
+    <form method="POST" action="/search_user/" style="display: content;">
+      {% csrf_token %}
+      <div class="row mx-sm-0 mx-md-0 align-items-end">
+        <div class="col-sm-12 px-1 mb-3">
+          <h5>Filter by</h5>
+        </div>
+        <div class=" col-sm-4 col-md-4 px-1">
+          <div class="form-group mb-0">
+            <input type="text" class="form-control" name="query" placeholder="Type your search here" oninput="makeRequired()">
+          </div>
+        </div>
+        <div class=" col-sm-2 col-md-2 px-1">
+          <select name="select_type" id="field-filter">
+            <option value="" selected disabled hidden>Filter By</option>
+            <option value="first_name">First Name</option>
+            <option value="last_name">Last Name</option>
+            <option value="email">Email</option>
+            <option value="phone">Phone</option>              
+          </select>
+        </div>
+
+          <div class=" col-sm-2 col-md-2 px-1">
+            <select name="status" id=""  oninput="makeUnRequired()">
+              <option value="" selected disabled hidden>Status</option>
+              <option value="admin">Admin</option>
+              <option value="staff">Staff</option>          
+            </select>
+          </div>
+
+        {% comment %} <div class="col col-sm-3 col-md-3 px-1">
+          <div class="form-group mb-0">
+            <label for="">Email</label>
+            <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
+          </div>
+        </div> {% endcomment %}
+        {% comment %} <div class="col col-sm-3 col-md-3 px-1">
+          <div class="form-group mb-0">
+            <label for="">Purchase Date</label>
+            <input type="date" class="form-control" id="exampleInputEmail1" placeholder="Purchase Date">
+          </div>
+        </div>
+        <div class="col col-sm-3 col-md-3 px-1">
+          <div class="form-group mb-0">
+            <label for="">Import Date</label>
+            <input type="date" class="form-control" id="exampleInputEmail1" placeholder="Import Date">
+          </div>
+        </div>{% endcomment %}
+        <div class="col-md-3 ml-auto px-1">
+          <div class="d-flex align-items-center justify-content-end bl-search">
+            <div class="search-btn mx-3">
+              <button type="submit" class="logout-btn">Search</button>
+            </div>
+            {% comment %} <div class="del-btn">
+              <button type="button" class="delete-btn border-0">Delete</button>
+            </div> {% endcomment %}
+          </div>
+        </div> 
+      </div>
+    </form>
+  </div>
+  {% endif %}
+  <div class="row pt-lg-5">
+    <div class="col-lg-12">
+      <div class="table-responsive source-table two">
+        {% if no_data %}
+          <h2 class="my-4">{{no_data}}</h3>
+        {% else %}
+        <table class="table">
+          <thead>
+            <tr class="first">
+              {% comment %} <th></th> {% endcomment %}
+              <th>S.No</th>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>Email</th>
+              <th>Phone</th>
+              <th>Status</th>
+              {% comment %} <th>created_at</th> {% endcomment %}
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for user in page_obj %}
+            <tr> 
+              {% comment %} <th scope="row">
+                <div class="form-check">
+                  <input type="checkbox" class="form-check-input" id="{{user.id}}">
+                  <label class="mb-0" for="{{user.id}}"></label>
+                </div>
+              </th> {% endcomment %}
+              <td>{{page_obj.start_index|add:forloop.counter0}}</td>
+              <td id="{{user.id}}fname">{{user.first_name}}</td>
+              <td id="{{user.id}}lname">{{user.last_name}}</td>
+              <td id="{{user.id}}email">{{user.email}}</td>
+              <td id="{{user.id}}phone">{{user.phone}}</td>
+              <td>{{user.status | capfirst}}</td>
+              {% comment %} <td>{{user.created_at}}</td> {% endcomment %}
+              <td class="flex">
+                <div class=" d-inline-block">
+                  <button class="border-0 d-flex align-items-center" id="{{user.id}}" onClick="reply_click(this.id)" type="button" data-toggle="modal"
+                    data-target="#add_user"> <img src="{% static 'images/edit-pen.png' %}" class="ml-2" width="15" alt=""></button>
+                </div>
+                <div class=" d-inline-block">
+                  <a href="{% url 'del_user' user.id %}"><button class="border-0 d-flex align-items-center"> <img src="{% static 'images/del-ic.png' %}" class="ml-2" width="12"
+                      alt=""></button></a>
+                </div>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        <nav aria-label="Page navigation example" class="my-2">
+          <ul class="pagination justify-content-end">
+        
+            {% if page_obj.has_previous %}
+            <li class="page-item">
+              <a class="page-link" href="?page=1">First</a>
+            </li>
+            <li class="page-item">
+              <a class="page-link" href="?page={{page_obj.previous_page_number}}">Previous</a>
+            </li>
+            {% else %}
+            <li class="page-item disabled">
+              <a class="page-link" href="#" tabindex="-1">Previous</a>
+            </li>
+            {% endif %}
+            
+            <li class="page-item"><a class="page-link" href="">{{page_obj.number}}</a></li>
+
+            
+            {% if page_obj.has_next %}
+            <li class="page-item">
+              <a class="page-link" href="?page={{page_obj.next_page_number}}">Next</a>
+            </li>
+            <li class="page-item">
+              <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+            </li>
+            {% else %}
+            <li class="page-item disabled">
+              <a class="page-link disabled" href="#" tabindex="-1">Next</a>
+            </li>
+            {% endif %}
+
+          </ul>
+        </nav>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  function makeRequired(){
+    document.getElementById("field-filter").required = true;
+  }
+
+  function makeUnRequired(){
+    document.getElementById("field-filter").required = false;
+  }
+
+  function reply_click(id)
+  {
+    fname = document.getElementById(id+"fname").innerHTML;
+    lname = document.getElementById(id+"lname").innerHTML;
+    email = document.getElementById(id+"email").innerHTML;
+    phone = document.getElementById(id+"phone").innerHTML;
+    document.getElementById("update_id").value = id;
+    document.getElementById("First").value = fname;
+    document.getElementById("Last").value = lname;
+    document.getElementById("Email").value = email;
+    document.getElementById("Phone").value = phone;
+  }
+</script>
+{% endblock content %}

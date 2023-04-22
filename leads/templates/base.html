@@ -1,0 +1,109 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>TRA | Dashboard</title>
+  <link rel="icon" type="image/x-icon" href="{% static 'images/favicon.PNG' %}">
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+  <div id="overlay">
+  <div class="spinner"></div> 
+  </div>
+    <header>
+      <div class="container">
+        <div class="row align-items-center justify-content-between">
+          <div class="col-lg-2 col-md-2 col-sm-3 col-6">
+            <div class="logo">
+              <a href="{% url 'home' %}"><img src="{% static 'images/logo.png' %}" width="140" alt=""></a>
+            </div>
+            
+            
+          </div>
+          <div class="col-lg-4 col-md-5 col-sm-5 col-5 bl-logout text-right d-flex align-items-center justify-content-center">
+            <h3 class="user">Welcome {{request.session.username}}</h3>
+            <button type="button" class="logout-btn"><a href="{% url 'logout' %}">Logout</a></button>
+            {% comment %} <img src="{% static 'images/user-thumb.jpg' %}" alt="" style="display: none;"> {% endcomment %}
+            
+
+            
+          </div>
+        </div>
+      </div>
+    </header>
+
+
+    <div class="main-content">
+      <input id="menu-toggle" type="checkbox" style="opacity: 0;" checked="true" />
+      <label class='menu-button-container' for="menu-toggle">
+        <i class="fa fa-arrow-right"></i>
+      </label>
+
+      <div class="left">
+        <ul class=" border-0 list-unstyled d-flex flex-column pl-0 mb-0">
+          <li class="">
+            <a class=" border-0 pl-4 text-white rounded-0 List {% if request.resolver_match.url_name == "home" %} active {% endif %}" href="{% url 'home' %}"><i class="fa fa-tachometer"></i> <span>Dashboard</span> </a>
+          </li>
+          </ul>
+        <ul class=" border-0 list-unstyled d-flex flex-column pl-0 mb-0">
+          <li class="">
+            <a class=" border-0 pl-4 text-white rounded-0 List {% if request.resolver_match.url_name == "sources" %} active {% endif %}" href="{% url 'sources' %}"><i class="fa fa-file-text"></i> <span>Source</span> </a>
+          </li>
+          </ul>
+        <ul class=" border-0 list-unstyled bl-tab d-flex flex-column pl-0 mb-0">
+          <li class=""> 
+            <a class=" border-0 text-white rounded-0  Source {% if request.resolver_match.url_name == "leads" %} active {% endif %}" href="{% url 'leads' %}"><i class="fa fa-bar-chart"></i> <span>Leads</span></a>
+          </li>
+          <li class="">
+            <a class=" border-0 text-white rounded-0 Import {% if request.resolver_match.url_name == "imports" %} active {% endif %}" href="{% url 'imports' %}">	
+              <i class="fa fa-download"></i> <span>Import</span></a>
+          </li>
+        </ul>
+        <ul class=" border-0 list-unstyled d-flex flex-column pl-0 mb-0">
+          <li class="">
+            <a class=" border-0 pl-4 text-white rounded-0 List {% if request.resolver_match.url_name == "file" %} active {% endif %}" href="{% url 'file' %}"><i class="fa fa-file-text"></i> <span>Redundant</span> </a>
+          </li>
+        </ul>
+        <details {% if request.resolver_match.url_name == "user" or request.resolver_match.url_name == "user_register" %} open {% else %} close {% endif %}>
+          <summary><i class="fa fa-user"></i>  <span>Users</span></summary>
+          <ul class=" border-0 list-unstyled d-flex flex-column mb-0">
+            <li class="">
+              <a class=" border-0 text-white rounded-0 User {% if request.resolver_match.url_name == "user" %} active {% endif %}" href="{% url 'user' %}">
+                <i class="fa fa-users"></i> <span> List </span>
+              </a>
+            </li>
+            <li class="">
+              <a class=" border-0 text-white rounded-0 addUser {% if request.resolver_match.url_name == "user_register" %} active {% endif %}" href="{% url 'user_register' %}"><i class="fa fa-user-plus"></i> <span> Add
+                User </span></a>
+            </li>
+          </ul>
+        </details>
+      </div>
+      <div class="right">
+          {% block content %}
+      
+          {% endblock content %}
+      </div>
+    </div>
+  
+  {% comment %} <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> {% endcomment %}
+  <script src="{% static 'js/script.js' %}"></script>
+  <script src="{% static 'js/jquery.slim.min.js' %}"></script>
+  <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/js/all.min.js" integrity="sha512-rpLlll167T5LJHwp0waJCh3ZRf7pO6IT1+LZOhAyP6phAirwchClbTZV3iqL3BMrVxIYRbzGTpli4rfxsCK6Vw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script>
+    $(document).ready(function () {
+      $("#overlay").hide(2000);
+  });
+</script>
+</body>
+
+</html>

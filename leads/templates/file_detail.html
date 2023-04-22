@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="">
+  <div id="List">
+    {% if empty_data %}
+    <h2 class="my-4 text-center">{{empty_data}}</h3>
+    {% else %}
+    <div class="row align-items-center">
+      <div class="col-lg-4 col-md-4">
+        <h4>Redundant Data in {{ file_name }}</h4>
+      </div>
+      <div class="col-lg-8 col-md-8 d-flex align-items-center justify-content-end bl-search">
+        <!-- <form  method="POST" action="/seach-file/" style="display: contents;">
+          {% csrf_token %}
+          <div class="search">
+            <input type="text" name="query" class="search-input border-0" placeholder="Search File" required>
+          </div>
+          <div class="search-btn mx-3">
+            <button type="submit" class="logout-btn">Search</button>
+          </div>
+        </form> -->
+        <!-- <div class="del-btn">
+          <button type="button" class="delete-btn border-0">Delete</button>
+        </div>  -->
+       
+      </div>
+    </div>
+
+    <div class="mt-lg-5 pt-xl-2">
+      <div class="bl-tble">
+        <div class="table-responsive source-table">
+          <table class="table">
+            <thead>
+              <tr class="first">
+                {% comment %} <th></th> {% endcomment %}
+                <th>S.No</th>
+                <th>Email</th>
+                <th>Redundant Count</th>
+                <th></th>s
+              </tr>
+            </thead>
+            <tbody>
+              {% for object in page_obj %}
+                <tr>
+                  <td>{{page_obj.start_index|add:forloop.counter0}}</td>
+                  <td>{{ object.email }}</td>
+                  <td>{{ object.redund_count }}</td>
+                  <td class="flex">
+                    {% comment %} <div class="edit-btn d-inline-block">
+                      <button class="d-flex align-items-center" id="5" onclick="reply_click(this.id)" type="button" data-toggle="modal" data-target="#exampleModalCenter"> <img src="/static/images/edit-pen.png" class="ml-2" width="15" alt=""></button>
+                    </div> {% endcomment %}
+                    {% comment %} <div class="del-btn d-inline-block">
+                      <a href="/source/5/"><button class="d-flex align-items-center"> <img src="/static/images/del-ic.png" class="ml-2" width="12" alt=""></button></a>
+                    </div> {% endcomment %}
+                  </td>
+                </tr>
+              {% endfor %}
+              </tbody>
+          </table>
+          <nav aria-label="Page navigation example" class="my-2">
+            <ul class="pagination justify-content-end">
+          
+              {% if page_obj.has_previous %}
+              <li class="page-item">
+                <a class="page-link" href="?page=1">First</a>
+              </li>
+              <li class="page-item">
+                <a class="page-link" href="?page={{page_obj.previous_page_number}}">Previous</a>
+              </li>
+              {% else %}
+              <li class="page-item disabled">
+                <a class="page-link" href="#" tabindex="-1">Previous</a>
+              </li>
+              {% endif %}
+              
+              <li class="page-item"><a class="page-link" href="">{{page_obj.number}}</a></li>
+  
+              
+              {% if page_obj.has_next %}
+              <li class="page-item">
+                <a class="page-link" href="?page={{page_obj.next_page_number}}">Next</a>
+              </li>
+              <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+              </li>
+              {% else %}
+              <li class="page-item disabled">
+                <a class="page-link disabled" href="#" tabindex="-1">Next</a>
+              </li>
+              {% endif %}
+  
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+  </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div id="addUser">
+    <div class="row align-items-center">
+      <div class="col-lg-7">
+        <h4>Add Users</h4>
+      </div>
+    </div>
+    <div class="row mt-4">
+      <form method='POST' action='/user_register/' style="display: contents;">
+        {% csrf_token %}
+        <div class="col-lg-4 col-md-6">
+          <div class="form-group">
+            <label for="First">First Name</label>
+            <input type="text" class="form-control" id="First"
+              placeholder="First Name" name="first_name" required>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-6">
+          <div class="form-group">
+            <label for="First">Last Name</label>
+            <input type="text" class="form-control" id="Last" placeholder="Last Name" name="last_name" required>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-6 bl"></div>
+        <div class="col-lg-4 col-md-6">
+          <div class="form-group">
+            <label for="First">Email</label>
+            <input type="email" class="form-control" id="First" placeholder="Email" name="email" required>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-6">
+          <div class="form-group">
+            <label for="First">Phone Number</label>
+            <input type="tel" class="form-control" id="First"
+              placeholder="Phone Number" name="phone" required>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-6 bl"></div>
+        <div class="col-lg-4 col-md-6">
+          <div class="form-group">
+            <label for="First">Password</label>
+            <input type="password" class="form-control" id="First" minlength="8" placeholder="Password" name="password" required>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-6">
+          <div class="form-group">
+            <label for="First">Confirm Password</label>
+            <input type="password" minlength="8" class="form-control" id="First"
+              placeholder="Confirm Password" name="confirm_password" required>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-6 bl"></div>
+        <div class="col-lg-4 col-md-6">
+          <div class="form-group">
+            <label for="First">Status</label><br>
+            <select  class="form-control" name="status" >
+              <option value="" selected disabled hidden>Status</option>
+              <option value="admin">Admin</option>
+              <option value="staff">Staff</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-12 mt-4">
+          <button class="blue-btn ml-0" type="submit">Add user</button>
+        </div>
+      </form>
+      {% if message %}
+      <div
+        class="alert  text-center text-danger my-3"
+        role="alert"
+        style="background-color: None!important;">
+        {{message}}
+      </div>
+    {% endif %}
+    </div>
+</div>
+{% endblock content %}

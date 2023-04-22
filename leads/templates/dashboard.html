@@ -1,0 +1,52 @@
+{% extends 'base.html' %} {% load static %} {% block content %}
+
+<div class="dashboard my-5">
+  <div class="row">
+    <div class="col-md-4 my-3">
+        <a href="{% url 'source_detail' %}">
+          <div class="dash-box" id="resource">
+            <div class="img">
+              <img
+                src="{% static 'images/resources.png' %}"
+                class="img-fluid"
+                width="50px"
+              />
+            </div>
+          <h3>{{sources}}</h3>
+          <p class="">Total Sources</p>
+          </div>
+        </a>
+    </div>
+    <div class="col-md-4 my-3">
+      <a href="{% url 'leads' %}">
+        <div class="dash-box" id="leads">
+          <div class="img">
+            <img
+              src="{% static 'images/leads.png' %}"
+              class="img-fluid"
+              width="50px"
+            />
+          </div>
+          <h3>{{leads}}</h3>
+          <p class="">Total Leads</p>
+        </div>
+      </a>
+    </div>
+    <div class="col-md-4 my-3">
+      <a href="{% url 'file' %}">
+        <div class="dash-box" id="redund">
+          <div class="img">
+            <img
+              src="{% static 'images/redunt.png' %}"
+              class="img-fluid"
+              width="50px"
+            />
+          </div>
+          <h3>{{redundant}}</h3>
+          <p class="">Total Redunded Data</p>
+        </div>
+      </a>
+    </div>
+  </div>
+</div>
+{% endblock content %}

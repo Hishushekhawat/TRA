@@ -1,0 +1,70 @@
+{% extends 'base.html' %} {% load static %} {% block content %}
+
+
+
+
+
+
+ <div class="dashboard">
+    <div class="first mt-5" style="">
+        <div class="row">
+        {% for object in page_obj %}
+          <div class="col-lg-4 col-md-6 my-3">
+            <div class="media d-flex align-items-center">
+              <img
+                src="{% static 'images/leads2.png' %}"
+                class="img-fluid"
+                width="50px"
+              />
+              <div class="media-body pl-4">
+                <h3>{{ object.name }}</h3>
+                <p class="mb-0">Actual: {{ object.leads }}</p>
+                <p class="mb-0">Redundant: {{ object.redundant }}</p>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+        </div>
+    </div>
+    <nav aria-label="Page navigation example" class="my-2">
+        <ul class="pagination justify-content-end">
+          {% if page_obj.has_previous %}
+          <li class="page-item">
+            <a class="page-link" href="?page=1">First</a>
+          </li>
+          <li class="page-item">
+            <a class="page-link" href="?page={{page_obj.previous_page_number}}"
+              >Previous</a
+            >
+          </li>
+          {% else %}
+          <li class="page-item disabled">
+            <a class="page-link" href="#" tabindex="-1">Previous</a>
+          </li>
+          {% endif %}
+
+          <li class="page-item">
+            <a class="page-link" href="">{{page_obj.number}}</a>
+          </li>
+
+          {% if page_obj.has_next %}
+          <li class="page-item">
+            <a class="page-link" href="?page={{page_obj.next_page_number}}"
+              >Next</a
+            >
+          </li>
+          <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}"
+              >Last</a
+            >
+          </li>
+          {% else %}
+          <li class="page-item disabled">
+            <a class="page-link disabled" href="#" tabindex="-1">Next</a>
+          </li>
+          {% endif %}
+        </ul>
+      </nav>
+ </div>
+
+{% endblock content %}

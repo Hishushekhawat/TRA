@@ -1,0 +1,207 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div id="Import" class="mb-5">
+  <div class="row align-items-center">
+    <div class="col-lg-7">
+      <h4>Import</h4>
+    </div>
+    <!-- <div class="col-lg-5 d-flex align-items-center justify-content-end">
+      <div class="search">
+        <input type="text" class="search-input border-0" placeholder="Search">
+      </div>
+      <div class="search-btn mx-3">
+        <button type="button" class="logout-btn">Search</button>
+      </div>
+    </div> -->
+  </div>
+
+  <form method='POST' action='/import/' enctype="multipart/form-data" style="display:contents;">
+    {% csrf_token %}
+
+    <div class="row mt-lg-5 filter">      
+      <div class="col-lg-3 px-2 col-md-4">
+        <select name="source" id="" class="w-100" required>
+          <option value="" selected disabled hidden>Select a source</option>
+          {% for data in source_data  %}
+          <option value="{{data.id}}">{{data.name}}</option>
+          {% endfor %}
+        </select>
+      </div>    
+      <div class="col-lg-7 col-md-8 px-2 d-flex align-items-center">
+          <input type="file" name="file" accept=".csv" required>
+          <button class="blue-btn" type="submit">Upload File</button>  
+      </div>
+    </div>
+
+  </form>
+
+  <div class="row mt-lg-5 pt-lg-5 ">
+    <div class="col-lg-11">
+      <form method='POST' action='/save_leads_column/' style="display:contents;">
+        {% csrf_token %}
+
+        <input type="hidden" name="file_id" value="{{file_id}}">
+        <input type="hidden" name="source_id" value="{{source_id}}">
+
+        <ul class="upload-details list-unstyled d-flex justify-content-between flex-wrap">
+          <li>
+            <div class="form-group my-2 d-flex align-items-center justify-content-between">
+              <label for="fst-name" class="w-25">First Name</label>
+              <select name="first_name" id="" class="w-50" required>
+                <option value="" selected disabled hidden>Select a column</option>
+                {% for col in columns %}
+                <option value="{{col}}">{{col}}</option>
+                {% endfor %}
+              </select>
+            </div>
+          </li>
+
+          <li>
+            <div class="form-group my-2 d-flex align-items-center justify-content-between">
+              <label for="fst-name" class="w-25">Last Name</label>
+              <select name="last_name" id="" class="w-50">
+                <option value="" selected disabled hidden>Select a column</option>
+                {% for col in columns %}
+                <option value="{{col}}">{{col}}</option>
+                {% endfor %}
+              </select>
+            </div>
+          </li>
+
+          <li>
+            <div class="form-group my-2 d-flex align-items-center justify-content-between">
+              <label for="fst-name" class="w-25">State</label>
+              <select name="state" id="" class="w-50">
+                <option value="" selected disabled hidden>Select a column</option>
+                {% for col in columns %}
+                <option value="{{col}}">{{col}}</option>
+                {% endfor %}
+              </select>
+            </div>
+          </li>
+
+          <li>
+            <div class="form-group my-2 d-flex align-items-center justify-content-between">
+              <label for="fst-name" class="w-25">City</label>
+              <select name="city" id="" class="w-50">
+                <option value="" selected disabled hidden>Select a column</option>
+                {% for col in columns %}
+                <option value="{{col}}">{{col}}</option>
+                {% endfor %}
+              </select>
+            </div>
+          </li>
+
+          <li>
+            <div class="form-group my-2 d-flex align-items-center justify-content-between">
+              <label for="fst-name" class="w-25">Address </label>
+              <select name="address" id="" class="w-50">
+                <option value="" selected disabled hidden>Select a column</option>
+                {% for col in columns %}
+                <option value="{{col}}">{{col}}</option>
+                {% endfor %}
+              </select>
+            </div>
+          </li>
+
+          <li>
+            <div class="form-group my-2 d-flex align-items-center justify-content-between">
+              <label for="fst-name" class="w-25">Debt Amount</label>
+              <select name="debt_amount" id="" class="w-50">
+                <option value="" selected disabled hidden>Select a column</option>
+                {% for col in columns %}
+                <option value="{{col}}">{{col}}</option>
+                {% endfor %}
+              </select>
+            </div>
+          </li>
+
+          <li>
+            <div class="form-group my-2 d-flex align-items-center justify-content-between">
+              <label for="fst-name" class="w-25">Phone Number</label>
+              <select name="phone" id="" class="w-50">
+                <option value="" selected disabled hidden>Select a column</option>
+                {% for col in columns %}
+                <option value="{{col}}">{{col}}</option>
+                {% endfor %}
+              </select>
+            </div>
+          </li>
+
+          <li>
+            <div class="form-group my-2 d-flex align-items-center justify-content-between">
+              <label for="fst-name" class="w-25">Email</label>
+              <select name="email" id="" class="w-50">
+                <option value="" selected disabled hidden>Select a column</option>
+                {% for col in columns %}
+                <option value="{{col}}">{{col}}</option>
+                {% endfor %}
+              </select>
+            </div>
+          </li>
+
+          <li>
+            <div class="form-group my-2 d-flex align-items-center justify-content-between">
+              <label for="fst-name" class="w-25">Opt-In IP </label>
+              <select name="opt_in_ip" id="" class="w-50">
+                <option value="" selected disabled hidden>Select a column</option>
+                {% for col in columns %}
+                <option value="{{col}}">{{col}}</option>
+                {% endfor %}
+              </select>
+            </div>
+          </li>
+          {% comment %} <li>
+            <div class="form-group my-2 d-flex align-items-center justify-content-between">
+              <label for="fst-name" class="w-25">Source</label>
+              <select name="source" id="" class="w-50">
+                <option value="" selected disabled hidden>Select a column</option>
+                {% for data in source_data  %}
+                <option value="{{data.name}}">{{data.name}}</option>
+                {% endfor %}
+              </select>
+            </div>
+          </li> {% endcomment %}
+          <li>
+            <div class="form-group my-2 d-flex align-items-center justify-content-between">
+              <label for="fst-name" class="w-25">Cost </label>
+              <select name="cost" id="" class="w-50">
+                <option value="" selected disabled hidden>Select a column</option>
+                {% for col in columns %}
+                <option value="{{col}}">{{col}}</option>
+                {% endfor %}
+              </select>
+            </div>
+          </li>
+          <li>
+            <div class="form-group my-2 d-flex align-items-center justify-content-between">
+              <label for="fst-name" class="w-25">Purchase Date</label>
+              <select name="purchase_date" id="" class="w-50">
+                <option value="" selected disabled hidden>Select a column</option>
+                {% for col in columns %}
+                <option value="{{col}}">{{col}}</option>
+                {% endfor %}
+              </select>
+            </div>
+          </li>
+          <li>
+            <div class="form-group my-2 d-flex align-items-center justify-content-between">
+              <label for="fst-name" class="w-25">Import date </label>
+              <select name="import_date" id="" class="w-50">
+                <option value="" selected disabled hidden>Select a column</option>
+                {% for col in columns %}
+                <option value="{{col}}">{{col}}</option>
+                {% endfor %}
+              </select>
+            </div>
+          </li>
+        </ul>
+        <div class="search-btn mt-5">
+          <button type="submit" class="logout-btn">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock content %}

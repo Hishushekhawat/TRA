@@ -1,0 +1,439 @@
+{% extends 'base.html' %} {% load static %} {% block content %} {% comment %}
+popup table {% endcomment %}
+<style>
+  .my-bl p {
+    display: flex;
+    background: #f0f0f0;
+    width: 100%;
+    padding: 10px 20px;
+  }
+
+  .my-bl p strong {
+    min-width: 130px;
+  }
+</style>
+<div
+  class="modal bl fade"
+  id="fulldata"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header border-0">
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body my-bl">
+        <div class="row justify-content-center">
+          <div class="col-md-6">
+            <p><strong>Id &nbsp; :</strong> <span id="data_id">2</span></p>
+          </div>
+          <div class="col-md-6">
+            <p><strong>Source &nbsp; :</strong> <span id="source">Source</span></p>
+          </div>
+          <div class="col-md-6">
+            <p><strong>First Name &nbsp; :</strong> <span id="f_name">Netty</span></p>
+          </div>
+          <div class="col-md-6">
+            <p><strong>Last Name &nbsp; :</strong> <span id="l_name">Croome</span></p>
+          </div>
+          <div class="col-md-6">
+            <p><strong>State &nbsp; :</strong> <span id="state">nan</span></p>
+          </div>
+          <div class="col-md-6">
+            <p><strong>City &nbsp; :</strong> <span id="city">Dayeuhluhur</span></p>
+          </div>
+
+          <div class="col-md-6">
+            <p><strong>Address &nbsp; :</strong> <span id="address">55794 Darwin Center </span></p>
+          </div>
+          <div class="col-md-6">
+            <p><strong>Debt Amount &nbsp; :</strong> <span id="debt_amount">$955.27 </span></p>
+          </div>
+          <div class="col-md-6">
+            <p><strong>Phone &nbsp; :</strong> <span  id="phone">+62 883 406 0192 </span></p>
+          </div>
+          <div class="col-md-6">
+            <p><strong>Email &nbsp; :</strong> <span  id="email">ncroome1@xrea.com </span></p>
+          </div>
+          <div class="col-md-6">
+            <p><strong>Opt-In IP &nbsp; :</strong> <span id="optinip">Ip</span></p>
+          </div>
+          <div class="col-md-6">
+            <p><strong>Cost &nbsp; :</strong> <span id="cost">$432.32</span></p>
+          </div>
+          <div class="col-md-6">
+            <p><strong>Purchase Date &nbsp; :</strong> <span id="purchase_date">2022-02-07</span></p>
+          </div>
+          <div class="col-md-6">
+            <p><strong>Import date &nbsp; :</strong> <span id="import_date">2022-04-14 </span></p>
+          </div>
+        </div>
+
+        {% comment %}
+        <div class="table-responsive source-table two" style="height: auto">
+          <table class="table" id="myTable">
+            <thead>
+              <tr class="first">
+                <th>Id</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>State</th>
+                <th>City</th>
+                <th>Address</th>
+                <th>Debt Amount</th>
+                <th>Phone</th>
+                <th>Email</th>
+                <th>Opt-In IP</th>
+                <th>Source</th>
+                <th>Cost</th>
+                <th>Purchase Date</th>
+                <th>Import date</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              {% endcomment %} {% comment %} {% for d in pop_up_data %}
+              <tr>
+                <td>{{d.id}}</td>
+                <td>{{d.first_name}}</td>
+                <td>{{d.last_name}}</td>
+                <td>{{d.state}}</td>
+                <td>{{d.city}}</td>
+                <td>{{d.address}}</td>
+                <td>{{d.debt_amount}}</td>
+                <td>{{d.phone}}</td>
+                <td>{{d.email}}</td>
+                <td>{{d.opt_in_ip}}</td>
+                <td>{{d.source.name}}</td>
+                <td>{{d.cost}}</td>
+                <td>{{d.purchase_date}}</td>
+                <td>{{d.import_date}}</td>
+                <td class="flex">
+                  <div class="d-inline-block">
+                    <a href="/del_lead/1/">
+                      <button class="border-0 d-flex align-items-center">
+                        <img
+                          src="/static/images/del-ic.png"
+                          class="ml-2"
+                          width="12"
+                          alt=""
+                        />
+                      </button>
+                    </a>
+                  </div>
+                </td>
+              </tr>
+              {% endfor %} {% endcomment %} {% comment %}
+            </tbody>
+          </table>
+        </div>
+        {% endcomment %}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% comment %} popup table {% endcomment %}
+<style>
+  #fulldata .modal-dialog {
+    width: 75%;
+    max-width: 90% !important;
+  }
+</style>
+
+<div id="Source">
+  {% comment %}
+  <div class="row align-items-center">
+    <div class="col-lg-7">
+      <h4>Leads</h4>
+    </div>
+    <div
+      class="col-lg-5 d-flex align-items-center justify-content-end bl-search"
+    >
+      <div class="search">
+        <input type="text" class="search-input border-0" placeholder="Search" />
+      </div>
+      <div class="search-btn mx-3">
+        <button type="button" class="logout-btn">Search</button>
+      </div>
+      <div class="del-btn">
+        <button type="button" class="delete-btn border-0">Delete</button>
+      </div>
+    </div>
+  </div>
+  {% endcomment %} {% if no_data %}
+  <h4 class="text-center my-4">{{ no_data }}</h4>
+  {% else %}
+  <div class="filter">
+    <div class="row mx-sm-0 mx-md-0 align-items-end">
+      <div class="col-sm-12 px-1 mb-3">
+        <h5>Filter by</h5>
+      </div>
+      <form method="POST" class="row align-items-end mx-0" action="/search_lead/">
+        {% csrf_token %}
+        <div class="col col-sm-3 col-md-4 px-1">
+          <label for="">Source</label>
+          <select name="source" id="">
+            <option value="" selected disabled hidden>Select source</option>
+            {% for data in source %}
+            <option value="{{data.id}}">{{data.name}}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="col col-sm-4 col-md-4 px-1">
+          <div class="form-group mb-0">
+            <label for="">Search</label>
+            <input type="text" class="form-control" id="exampleInputEmail1" name="email" placeholder="Type email or name"/>
+          </div>
+        </div>
+        {% comment %}
+        <div class="col col-sm-3 col-md-3 px-1">
+          <div class="form-group mb-0">
+            <label for="">Purchase Date</label>
+            <input
+              type="date"
+              class="form-control"
+              id="exampleInputEmail1"
+              name="purchase_date"
+              placeholder="Purchase Date"
+            />
+          </div>
+        </div>
+        <div class="col col-sm-3 col-md-3 px-1">
+          <div class="form-group mb-0">
+            <label for="">Import Date</label>
+            <input
+              type="date"
+              class="form-control"
+              id="exampleInputEmail1"
+              name="import_date"
+              placeholder="Import Date"
+            />
+          </div>
+        </div>
+        {% endcomment %}
+        <div class="col col-md-4 ml-auto px-1">
+          <div class="d-flex align-items-center justify-content-end bl-search">
+            <div class="search-btn">
+              <button type="submit" class="logout-btn">Search</button>
+            </div>
+            {% comment %}
+            <div class="del-btn">
+              <button type="button" class="delete-btn border-0">Delete</button>
+            </div>
+            {% endcomment %}
+          </div>
+        </div>
+      </form>
+      <div class="btn ml-auto">
+        <a href={% url 'export_lead' %}><button type="button" class="delete-btn border-0">Export</button></a>
+      </div>
+    </div>
+  </div>
+  <div class="row pt-lg-5">
+    <div class="col-lg-12">
+      <div class="table-responsive source-table two">
+        <table class="table">
+          <thead>
+            <tr class="first">
+              {% comment %}
+              <th></th>
+              {% endcomment %}
+              <th>S.No</th>
+              <th>Full Name</th>
+              {% comment %}
+              <th>Last Name</th>
+              {% endcomment %} {% comment %}
+              <th>State</th>
+              {% endcomment %} {% comment %}
+              <th>City</th>
+              {% endcomment %}
+              <th>Address</th>
+              <th>Debt Amount</th>
+              <th>Phone</th>
+              <th>Email</th>
+              {% comment %}
+              <th>Opt-In IP</th>
+              {% endcomment %}
+              <th>Source</th>
+              <th>Cost</th>
+              {% comment %}
+              <th>Purchase Date</th>
+              <th>Import date</th>
+              {% endcomment %}
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for d in page_obj.object_list %}
+
+            <tr>
+              {% comment %}
+              <th scope="row">
+                <div class="form-check">
+                  <input type="checkbox" class="form-check-input" id="firsts" />
+                  <label class="mb-0" for="firsts"></label>
+                </div>
+              </th>
+              {% endcomment %}
+              <td id="{{d.id}}id">
+                {{ page_obj.start_index|add:forloop.counter0 }}
+              </td>
+              <td>{{ d.first_name }} {{ d.last_name }}</td>
+              {% comment %}
+              <td></td>
+              {% endcomment %} {% comment %}
+              <td>{{ d.state }}</td>
+              <td>{{ d.city }}</td>
+              {% endcomment %}
+              <td>{{ d.address }}</td>
+              <td>{{ d.debt_amount }}</td>
+              <td>{{ d.phone }}</td>
+              <td>{{ d.email }}</td>
+              {% comment %}
+              <td>{{ d.opt_in_ip }}</td>
+              {% endcomment %}
+              <td>{{ d.source.name }}</td>
+              <td>{{ d.cost }}</td>
+              {% comment %}
+              <td>{{ d.purchase_date }}</td>
+              <td>{{ d.import_date }}</td>
+              {% endcomment %}
+              <td class="flex">
+                <div class="d-inline-block">
+                  <button
+                    type="button"
+                    name="id"
+                    class="up-btn mt-0 border-0"
+                    id="{{d.id}}"
+                    data-toggle="modal"
+                    onclick="show_data(this.id)"
+                    data-target="#fulldata"
+                  >
+                    <img
+                      src="{% static 'images/info.png' %}"
+                      class="ml-2"
+                      width="12"
+                      alt=""
+                    />
+                    <p name="leads" value="{{d.id}}" style="display: none">
+                      {{d.id}}
+                    </p>
+                  </button>
+                </div>
+                <div class="d-inline-block">
+                  <a href="{% url 'del_lead' d.id %}">
+                    <button class="border-0 d-flex align-items-center">
+                      <img
+                        src="{% static 'images/del-ic.png' %}"
+                        class="ml-2"
+                        width="12"
+                        alt=""
+                      />
+                    </button>
+                  </a>
+                </div>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      <nav aria-label="Page navigation example" class="my-2">
+        <ul class="pagination justify-content-end">
+          {% if page_obj.has_previous %}
+          <li class="page-item">
+            <a class="page-link" href="?page=1">First</a>
+          </li>
+          <li class="page-item">
+            <a class="page-link" href="?page={{page_obj.previous_page_number}}"
+              >Previous</a
+            >
+          </li>
+          {% else %}
+          <li class="page-item disabled">
+            <a class="page-link" href="#" tabindex="-1">Previous</a>
+          </li>
+          {% endif %}
+
+          <li class="page-item">
+            <a class="page-link" href="">{{page_obj.number}}</a>
+          </li>
+
+          {% if page_obj.has_next %}
+          <li class="page-item">
+            <a class="page-link" href="?page={{page_obj.next_page_number}}"
+              >Next</a
+            >
+          </li>
+          <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}"
+              >Last</a
+            >
+          </li>
+          {% else %}
+          <li class="page-item disabled">
+            <a class="page-link disabled" href="#" tabindex="-1">Next</a>
+          </li>
+          {% endif %}
+        </ul>
+      </nav>
+    </div>
+  </div>
+  {% endif %}
+</div>
+<script type ="text/javascript">
+
+  function show_data(id) {
+
+    fetch("http://54.177.123.62:8000/lead/" + id + "/")
+      .then((response) => {
+        return response.json();
+      })
+      .then((myJson) => {
+        document.getElementById('data_id').innerHTML = myJson.data.id;
+        document.getElementById('source').innerHTML = myJson.data.source;
+        document.getElementById('f_name').innerHTML = myJson.data.first_name; 
+        document.getElementById('l_name').innerHTML = myJson.data.last_name;
+        document.getElementById('state').innerHTML = myJson.data.state;
+        document.getElementById('city').innerHTML = myJson.data.city;
+        document.getElementById('address').innerHTML = myJson.data.address;
+        document.getElementById('debt_amount').innerHTML = myJson.data.debt_amount;
+        document.getElementById('phone').innerHTML = myJson.data.phone;
+        document.getElementById('email').innerHTML = myJson.data.email;
+        document.getElementById('optinip').innerHTML = myJson.data.opt_in_ip;
+        document.getElementById('cost').innerHTML = myJson.data.cost;
+        document.getElementById('purchase_date').innerHTML = myJson.data.purchase_date;
+        document.getElementById('import_date').innerHTML = myJson.data.import_date;
+      });
+  }
+</script>
+{% endblock content %}
+
+
+{% comment %} var table = document.getElementById("myTable");
+var row = table.insertRow();
+var cell1 = document.getElementById('').innerHTML = myJson.data.id);
+var cell2 = document.getElementById('')(1).innerHTML = myJson.data.first_name);
+var cell3 = document.getElementById('')(2).innerHTML = myJson.data.last_name);
+var cell4 = document.getElementById('')(3).innerHTML = myJson.data.state);
+var cell5 = document.getElementById('')(4).innerHTML = myJson.data.city);
+var cell6 = document.getElementById('')(5).innerHTML = myJson.data.address);
+var cell7 = document.getElementById('')(6).innerHTML = myJson.data.debt_amount);
+var cell8 = document.getElementById('')(7).innerHTML = myJson.data.phone);
+var cell9 = document.getElementById('')(8).innerHTML = myJson.data.email);
+var cell10 = document.getElementById('')(9).innerHTML = myJson.data.opt_in_ip);
+var cell11 = document.getElementById('')(10).innerHTML = myJson.data.source);
+var cell12 = document.getElementById('')(11).innerHTML = myJson.data.cost);
+var cell13 = document.getElementById('')(12).innerHTML = myJson.data.purchase_date);
+var cell14 = document.getElementById('')(13).innerHTML = myJson.data.import_date); {% endcomment %}

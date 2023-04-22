@@ -1,0 +1,184 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+  <!--edit modal popup with edit -->
+
+<div class="modal bl fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+  aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header border-0">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form method='POST' action='/update_source/'>
+          {% csrf_token %}
+          <div class="form-group d-flex align-items-center justify-content-start flex-column">
+            <label for="Name" class="mr-3 mb-0 w-100 pl-2 mb-2 text-left"> Name</label>
+            <input type="text" class="form-control" id="SName" name="name" placeholder="Company Name">
+            <input type="hidden" class="form-control" id="update_sid" name="id">
+          </div>
+          <div class="up-btn text-center">
+            <button type="submit" class="up-btn border-0">Update</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <!--edit modal popup with edit -->
+  
+  
+  <!--add source modal popup with add source -->
+ 
+<div class="modal bl fade" id="add" tabindex="-1" role="dialog"
+  aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header border-0">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form method='POST' action='/sources/'>
+        {% csrf_token %}
+        <div class="modal-body">
+          <div class="form-group d-flex align-items-center justify-content-start flex-column">
+            <label for="Name" class="mr-3 mb-0 w-100 pl-2 mb-2 text-left"> Name</label>
+            <input type="text" class="form-control" id="Name" name="name" placeholder="Company Name">
+          </div>
+          <div class="up-btn text-center">
+            <button class="up-btn border-0" type="submit">Save</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+  <!--add source modal popup with add source -->
+
+<div class="">
+  <div id="List">
+    <div class="row align-items-center">
+      <div class="col-lg-4 col-md-4">
+        <h4>Source</h4>
+      </div>
+      <div class="col-lg-8 col-md-8 d-flex align-items-center justify-content-end bl-search">
+        <form  method="POST" action="/search_source/" style="display: contents;">
+          {% csrf_token %}
+          <div class="search">
+            <input type="text" name="query" class="search-input border-0" placeholder="Search" required>
+          </div>
+          <div class="search-btn mx-3">
+            <button type="submit" class="logout-btn">Search</button>
+          </div>
+        </form>
+        {% comment %} <div class="del-btn">
+          <button type="button" class="delete-btn border-0">Delete</button>
+        </div> {% endcomment %}
+        <div class="up-btn ml-5 text-center">
+          <button type="button" class="up-btn mt-0 border-0" data-toggle="modal"
+          data-target="#add">Add Source +</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-lg-5 pt-xl-5">
+      <div class="bl-tble">
+        <div class="table-responsive source-table">
+          {% if no_data %}
+          <h2 class="my-4">{{no_data}}</h3>
+          {% else %}
+          <table class="table">
+            <thead>
+              <tr class="first">
+                {% comment %} <th></th> {% endcomment %}
+                <th class="w-25">S.No</th>
+                <th> Source Name</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for data in page_obj  %}
+              <tr>
+                {% comment %} <th scope="row">
+                  <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="{{ data.id }}">
+                    <label class="mb-0" for="{{ data.id }}"></label>
+                  </div>
+                </th> {% endcomment %}
+                <td class="w-25">{{page_obj.start_index|add:forloop.counter0}}</td>
+                <td id="{{ data.id }}source">{{data.name}}</td>
+                <td class="flex">
+                  <div class="edit-btn d-inline-block">
+                    <button class="d-flex align-items-center" id="{{data.id}}" onClick="reply_click(this.id)" type="button" data-toggle="modal"
+                      data-target="#exampleModalCenter"> <img src="{% static 'images/edit-pen.png' %}" class="ml-2" width="15"
+                        alt=""></button>
+                  </div>
+                  {% comment %} <div class="del-btn d-inline-block">
+                    <a href="{% url 'del_source' data.id %}"><button class="d-flex align-items-center"> <img src="{% static 'images/del-ic.png' %}" class="ml-2"
+                        width="12" alt=""></button></a>
+                  </div> {% endcomment %}
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+          <nav aria-label="Page navigation example" class="my-2">
+            <ul class="pagination justify-content-end">
+          
+              {% if page_obj.has_previous %}
+              <li class="page-item">
+                <a class="page-link" href="?page=1">First</a>
+              </li>
+              <li class="page-item">
+                <a class="page-link" href="?page={{page_obj.previous_page_number}}">Previous</a>
+              </li>
+              {% else %}
+              <li class="page-item disabled">
+                <a class="page-link" href="#" tabindex="-1">Previous</a>
+              </li>
+              {% endif %}
+              
+              <li class="page-item"><a class="page-link" href="">{{page_obj.number}}</a></li>
+  
+              
+              {% if page_obj.has_next %}
+              <li class="page-item">
+                <a class="page-link" href="?page={{page_obj.next_page_number}}">Next</a>
+              </li>
+              <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+              </li>
+              {% else %}
+              <li class="page-item disabled">
+                <a class="page-link disabled" href="#" tabindex="-1">Next</a>
+              </li>
+              {% endif %}
+  
+            </ul>
+          </nav>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  function reply_click(id)
+  {
+    data = document.getElementById("update_sid");
+    edit = document.getElementById(id+"source").innerHTML;
+    const name = edit;
+    console.log(document.getElementById("SName"))
+    document.getElementById("SName").value = name;
+    data.value = id;
+  }
+</script>
+{% endblock content %}

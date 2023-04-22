@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div id="User">
+    <div class="row align-items-center">
+      <div class="col-lg-7">
+        <h4>Redundant Data found in file</h4>
+      </div>
+    </div>
+    <div class="row pt-lg-5 d-block">
+        <div class="col-sm-6">
+            <div class="table-responsive source-table two">
+            {% if no_data %}
+                <h2 class="my-4">{{no_data}}</h3>
+            {% else %}
+            <table class="table">
+                <thead>
+                <tr class="first">
+                    <th>Email</th>
+                    <th>Count</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for data in redund_data %}
+                <tr> 
+                    <td>{{data.email}}</td>
+                    <td>{{data.redund_count}}</td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            {% endif %}
+            </div>
+        </div>
+      <a href="{% url 'leads' %}"><button class="blue-btn my-5">Go To Leads</button></a>
+    </div>
+</div>
+{% endblock content %}

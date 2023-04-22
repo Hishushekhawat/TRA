@@ -1,0 +1,21 @@
+{% extends 'base.html' %} {% load static %} {% block content %}
+<form
+  id="msform"
+  name="registration"
+  class="registrationScrub"
+  method="POST"
+  enctype="multipart/form-data"
+  action=""
+>
+  {% csrf_token %}
+  <div class="form-card" style="height: 600px">
+    <div class="scrub-box pb200">
+      {% if message %}
+      <div class="alert bg-light text-center text-primary" role="alert">
+        {{message}}
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</form>
+{% endblock content %}
